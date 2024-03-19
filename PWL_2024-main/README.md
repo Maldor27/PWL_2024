@@ -1,10 +1,6 @@
 ## JOBSHEET 4 MODEL dan ELOQUENT ORM
 
 Nama : Mochammad Aldo Rizky <br>
-Mata Kuliah : Pemrograman Web Lanjut (PWL) <br>
-Program Studi : D4 – Teknik Informatika / D4 – Sistem Informasi Bisnis <br>
-Semester : 4 (empat) / 6 (enam)  <br>
-Pertemuan ke- : 4 (Empat)
 
 
 ### Praktikum 1 - $fillable
