@@ -26,28 +26,31 @@ Semester : 6 (enam)  <br>
 
 ### TUGAS </br>
 - Output:
-![image](../Doc-Images/Pertemuan%207/Praktikum%204.png) </br>
+![image](../Doc-Images/Pertemuan%207/Tugas1.png) </br>
+![image](../Doc-Images/Pertemuan%207/Tugas1.2.png) </br>
+![image](../Doc-Images/Pertemuan%207/Tugas1.3.png) </br>
+![image](../Doc-Images/Pertemuan%207/Tugas1.4.png) </br>
 
 ### Pertanyaan </br>
 1. Apa perbedaan frontend template dengan backend template?
 Jawaban </br>
-Frontend template : kerangka untk mempermudah pembuatan interface, sedangkan backend template merupakan kerangka yg memudahkan pembuatan backend
+Frontend template : untk mempermudah pembuatan interface, sedangkan backend template merupakan kerangka yg memudahkan pembuatan backend
 2. Apakah layouting itu penting dalam membangun sebuah website?
 Jawaban </br>
-Layouting atau tata letak penting untuk tata letak website
+tata letak penting untuk kemudahan dalam mengakses atau mengguakan website
 3. Jelaskan fungsi dari komponen laravel blade berikut : @include(), @extend(), 
 @section(), @push(), @yield(), dan @stack()
 Jawaban </br>
-   a. $include() untuk mengikutsertakan view lain </br>
-   b. @extend() untuk menambah atau memperluas view </br>
-   c. @section() untuk menambah konten dinamis </br>
-   d. @push() untuk menambah konten bagian @stack </br>
-   d. @yield() untuk menerapkan konten dinamis </br>
-   e. @stack() untuk menandai tempat penambahan konten oleh @push </br>
+   a. $include() : mengikut sertakan view lain kedalam view tersebut </br>
+   b. @extend() : memperluas view </br>
+   c. @section() : menambah atau membagi konten agar dinamis </br>
+   d. @push() : menambah konten bagian @stack </br>
+   d. @yield() : menerapkan  dinamis konten </br>
+   e. @stack() : menandai tempat penambahan konten oleh @push </br>
 4. Apa fungsi dan tujuan dari variable $activeMenu ? </br>
 Jawaban </br>
-   a. Fungsi variabel $active menu untuk menyinpan menu item apa yang akan aktif</br>
-   b. Tujuannya agar ketika membuka sebuah halaman misal halaman user maka pada sidebar akan aktif menu item user
+   a. Fungsi variabel $activeMenu untuk menyimpan atau sebagai tanda menu item apa yang sedang aktif atau sedang dibuka</br>
+   b. Tujuannya agar ketika membuka sebuah halaman misal halaman kategori maka pada sidebar akan aktif menu item user
 
 
 
