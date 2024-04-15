@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta set="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title{{ config('app.name', 'PWL Laravel Starter Code') }}</title>
 
@@ -30,10 +30,15 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ url('/')}}" class="brand-link">
-      <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="{{ url('/') }}" class="brand-link">
+      @if ($user && !empty($user->profile_picture))
+      <img src="{{ asset('/profile_picture/' . $user->profile_picture) }}" alt="User Profile Picture" class="brand-image img-circle elevation-3" style="opacity: .8">
+      @else
+          <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      @endif
       <span class="brand-text font-weight-light">PWL - Starter Code</span>
-    </a>
+  </a>
+  
 
     <!-- Sidebar -->
     @include('layouts.sidebar')
@@ -60,7 +65,8 @@
 <!-- jQuery -->
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
-<script src="{{ asset ('admintlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables & Plugins -->
 <script src="{{ asset ('adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset ('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -76,6 +82,8 @@
 <script src="{{ asset ('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset ('adminlte/dist/js/adminlte.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
   //untuk mengirimkan token laravel CSRF pada setiap request ajax
   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});

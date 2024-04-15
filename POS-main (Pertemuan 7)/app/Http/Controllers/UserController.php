@@ -6,6 +6,10 @@ use App\Models\UserModel;
 use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -66,8 +70,9 @@ class UserController extends Controller
 
         $level = LevelModel::all(); //ambil data level untuk ditampilkan di form
         $activeMenu = 'user'; //set menu yang sedang aktif
+        $level_id = LevelModel::all(); // Mengambil semua isi tabe
 
-        return view('user.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('user.create', ['level_id' => $level_id, 'breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
     // Menyimpan data user baru
@@ -78,14 +83,26 @@ class UserController extends Controller
             'username' => 'required|string|min:3|unique:m_user,username',
             'nama' => 'required|string|max:100', //nama harus diisi, berupa string, maksimal 100 karakter
             'password' => 'required|min:5', //password harus diisi, minimal 5 karakter
-            'level_id' => 'required|integer' //level_id harus diisi, berupa angka
+            'level_id' => 'required|integer', //level_id harus diisi, berupa angka
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            // Save the file directly in the public directory under 'profile_picture'
+            $file->move(public_path('profile_picture'), $filename);
+        } else {
+            $filename = 'default.jpg';
+        }
 
         UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
             'password' => bcrypt($request->password), //password dienkripsi sebelum disimpan
-            'level_id' => $request->level_id
+            'level_id' => $request->level_id,
+            'profile_picture' => $filename,
         ]);
 
         return redirect('/user')->with('status', 'Data user berhasil ditambahkan!');
@@ -107,7 +124,7 @@ class UserController extends Controller
 
         $activeMenu = 'user'; //set menu yang sedang aktif
 
-        return view('user.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
+        return view('user.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'useri' => $user, 'activeMenu' => $activeMenu]);
     }
 
     //Menampilkan halaman form edit user
@@ -133,6 +150,7 @@ class UserController extends Controller
     //Menyimpan perubahan data user
     public function update(Request $request, string $id)
     {
+        Log::info($request);
         $request->validate([
             //Username harus diisi, berupa string, minimal 3 karakter
             //dan bernilai unik di tabel m_user kolom username kecuali untuk user dengan id yang sedang diedit
@@ -168,5 +186,23 @@ class UserController extends Controller
             //Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
             return redirect('/user')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini'); //jika terjadi error
         }
+    }
+
+    //Export data user ke pdf
+    public function exportPdf()
+    {
+        $users = UserModel::all(); //ambil semua data user
+
+        // return view('user.pdf', ['users' => $users]); //load view pdf.blade.php dan kirim data user
+
+        $pdf = Pdf::loadView('user.pdf', ['users' => $users]); //load view pdf.blade.php dan kirim data user
+
+        return $pdf->download('data_user.pdf'); //download file pdf
+    }
+
+    //Export data user ke excel
+    public function exportExcel()
+    {
+        return Excel::download(new UsersExport, 'data_user.xlsx'); //download file excel
     }
 }
